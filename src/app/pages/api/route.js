@@ -9,9 +9,9 @@ export default async function handler(req, res) {
   try {
     const { image, image_url } = req.body;
 
-    const apiKey = 'oflvb52Gq8eTSlvcOw3A'; // Usar variables de entorno en producción
-    const model = 'resnet-50dragonfruit-disease-1h8yt';
-    const version = '1';
+    const apiKey = '8pkFkb4Hh9JoBJzxQE8X';  // Recuerda moverlo a variables de entorno en producción
+    const model = 'resnet-50dragonfruit-disease-2'; // Modelo Roboflow
+    const version = '2'; // Versión del modelo
 
     const endpoint = `https://detect.roboflow.com/${model}/${version}?api_key=${apiKey}`;
 

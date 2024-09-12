@@ -12,9 +12,9 @@ function Page() {
   const [loading, setLoading] = useState(false); // Para controlar el estado de carga
   const [error, setError] = useState(''); // Manejo de errores
 
-  const apiKey = 'oflvb52Gq8eTSlvcOw3A';  // Recuerda moverlo a variables de entorno en producción
-  const model = 'resnet-50dragonfruit-disease-1h8yt'; // Modelo Roboflow
-  const version = '1'; // Versión del modelo
+  const apiKey = '8pkFkb4Hh9JoBJzxQE8X';  // Recuerda moverlo a variables de entorno en producción
+  const model = 'resnet-50dragonfruit-disease-2'; // Modelo Roboflow
+  const version = '2'; // Versión del modelo
 
   // Maneja el cambio de archivo y lo convierte a base64
   const handleFileChange = (e) => {
