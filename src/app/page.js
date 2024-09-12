@@ -1,6 +1,8 @@
 'use client';
 import { useState } from 'react';
 import axios from 'axios';
+import Image from 'next/image';
+import { poppins } from './fonts';
 
 function Page() {
   const [image, setImage] = useState(null); // Para almacenar la imagen cargada
@@ -72,26 +74,48 @@ function Page() {
   };
 
   return (
-    <div className="container mx-auto p-4">
-      <h1 className="text-2xl font-bold mb-4">Subir Imagen para Detección de Plagas</h1>
-      <div className="flex space-x-4">
-        <button
-          className={`bttn ${fileMethod === 'upload' ? 'active' : ''}`}
+    <main className="flex min-h-screen flex-col justify-start">
+      <div className="flex flex-row items-center justify-between px-3 py-0 bg-blue-200 mb-10 md:px-6 md:py-4">
+        <div className="flex items-center space-x-4">
+          <div className="w-10 h-10">
+            <Image
+              src="/pitaya.jpg"
+              layout="intrinsic"
+              width={100}
+              height={100}
+              objectFit="contain"
+              alt="Captura de pantalla del proyecto de panel de control mostrando versión de escritorio"
+            />
+          </div>
+          <strong className={`${poppins.className} text-xl lg:text-3xl mb-4`}>AgroScan</strong>
+        </div>
+      </div>
+      <div className="flex space-x-10 ml-4">
+      <button
+          className={`${poppins.className} ${fileMethod === 'upload' ? 'bg-blue-500 text-white' : 'bg-gray-200 text-black'} 
+            px-6 py-3 rounded-lg shadow-md transition duration-300 ease-in-out 
+            hover:bg-blue-600 hover:shadow-lg focus:outline-none focus:ring-2 
+            focus:ring-blue-300 active:bg-blue-700`}
           onClick={() => handleMethodChange('upload')}
         >
           Subir Archivo
         </button>
+
         <button
-          className={`bttn ${fileMethod === 'url' ? 'active' : ''}`}
+          className={`${poppins.className} ${fileMethod === 'url' ? 'bg-blue-500 text-white' : 'bg-gray-200 text-black'} 
+            px-6 py-3 rounded-lg shadow-md transition duration-300 ease-in-out 
+            hover:bg-blue-600 hover:shadow-lg focus:outline-none focus:ring-2 
+            focus:ring-blue-300 active:bg-blue-700`}
           onClick={() => handleMethodChange('url')}
         >
           Usar URL
         </button>
+
       </div>
   
-      <form onSubmit={handleSubmit} className="mt-4">
+            <form onSubmit={handleSubmit} className="mt-4 ml-4">
         {fileMethod === 'upload' ? (
-          <div>
+          <div className="mb-12">
             <input
               type="file"
               accept="image/*"
@@ -100,41 +124,61 @@ function Page() {
             />
           </div>
         ) : (
-          <div>
+          <div className="mb-12">
             <input
               type="text"
               value={url}
               onChange={handleUrlChange}
               placeholder="Ingresa la URL de la imagen"
-              className="block w-full text-sm text-gray-500"
+              className="block w-auto text-sm text-gray-700 bg-gray-200"
+              style={{ width: "300px" }}
             />
           </div>
-        )}
-  
+        )}  
         <button
-          type="submit"
-          disabled={loading}
-          className={`mt-4 px-4 py-2 ${loading ? 'bg-gray-400' : 'bg-blue-500'} text-white rounded`}
-        >
-          {loading ? 'Cargando...' : 'Enviar Imagen'}
-        </button>
+        type="submit"
+        disabled={loading}
+        className={`${poppins.className} mt-4 px-6 py-3 rounded-lg shadow-md transition duration-300 ease-in-out 
+          ${loading ? 'bg-gray-400' : 'bg-blue-500'} 
+          text-white hover:bg-blue-600 hover:shadow-lg focus:outline-none 
+          focus:ring-2 focus:ring-blue-300 active:bg-blue-700`}
+      >
+        {loading ? 'Cargando...' : 'Enviar Imagen'}
+      </button>
+
       </form>
   
-      {loading && <p>Procesando la imagen...</p>}
+      {loading && <p className={`${poppins.className} ml-4`}>Procesando la imagen...</p>}
       {error && <p className="text-red-500">{error}</p>}
       {results && (
         <div>
-          <h2 className="text-xl font-semibold mt-4">Resultados de Detección</h2>
+          <h2 className={`${poppins.className} text-xl font-semibold mt-4 ml-4 ml-4`}>Resultados de Detección</h2>
   
           {/* Nueva lógica para mostrar si la planta está sana o no */}
+          <div className="text-xl font-semibold mt-4 ml-4" style={{ width: '200px', height: 'auto' }}>
           {results.predictions.healthy.confidence >= 0.5 ? (
-            <p className="text-green-500 font-bold">La planta está sana</p>
+                  <Image
+                    src="/sano.png"
+                    layout="responsive"
+                    width={500}
+                    height={154}
+                    objectFit="contain"
+                    alt="Captura de pantalla del proyecto de panel de control mostrando versión de escritorio"
+                  />
           ) : (
-            <p className="text-red-500 font-bold">La planta no está sana</p>
+            <Image
+              src="/enfermo.png"
+              layout="responsive"
+              width={4501}
+              height={1385}
+              objectFit="contain"
+              alt="Captura de pantalla del proyecto de panel de control mostrando versión de escritorio"
+            />
           )}
         </div>
+        </div>
       )}
-    </div>
+    </main>
   );
   
 }
